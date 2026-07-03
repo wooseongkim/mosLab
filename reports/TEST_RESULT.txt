@@ -1,0 +1,35 @@
+MiniOS reference implementation verification
+Date: 2026-07-02
+
+Command:
+python tools/verify.py --chapter CH13
+
+Result:
+Forbidden API check passed
+...........                                                              [100%]
+11 passed in 0.13s
+
+The verifier ran all selected chapter markers cumulatively:
+ch01, ch02, ch03, ch04, ch06, ch07, ch08, ch09, ch10, ch11, ch13
+
+Extended instructor verification:
+python tools/verify.py --chapter CH13 --hidden-tests instructor_tests
+
+Forbidden API check passed
+.....................                                                    [100%]
+21 passed in 0.29s
+
+Sequential functional demo:
+python examples/run_chapter_sequence.py
+
+CH01 RAM[10]=7, IRQs=['TIMER'], halted=True
+CH02 booted=True, console=b'OK', bytes=2
+CH03 pid=1:TERMINATED/exit=0, pid=2:TERMINATED/exit=3
+CH04 mutex_owner=2, signal=TERM, message=b'hello'
+CH06 RR sequence=[1, 1, 2, 2, 3, 3]
+CH07 allocations=(0,16),(16,8), free=[(0, 64)], invariants=[]
+CH08 swapped_page1=True, restored=b'B', faults=4, out=2, in=1
+CH09 block_order=[4, 7, 1], IRQs=['IO_COMPLETE', 'IO_COMPLETE', 'IO_COMPLETE']
+CH10 remount_read=b'hello MiniOS', inode_bitmap_used=2
+CH11 packet=src:2/dst:1/seq:7/payload:b'ping'
+CH13 boot1_file='agentic-os', process_exit=0, boot2_file='agentic-os', reboot_processes=0

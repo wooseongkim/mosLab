@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minios-agentic-lab"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+  "ch01: virtual hardware",
+  "ch02: kernel and syscall",
+  "ch03: process lifecycle",
+  "ch04: synchronization and IPC",
+  "ch06: round robin scheduler",
+  "ch07: memory allocator",
+  "ch08: virtual memory and swap",
+  "ch09: block IO",
+  "ch10: file system",
+  "ch11: network IPC",
+  "ch13: final integration",
+]
+
