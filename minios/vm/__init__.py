@@ -1,2 +1,0 @@
-"""Virtual memory and swap."""
-

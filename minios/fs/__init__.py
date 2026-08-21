@@ -1,2 +1,0 @@
-"""MiniOS inode file system."""
-

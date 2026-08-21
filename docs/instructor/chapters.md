@@ -1,0 +1,49 @@
+# LAB1-LAB10 지도 요약
+
+## LAB1 kernel lifecycle
+
+VM 생성, 커널 상태 전이, timer tick 조회를 구현한다. 중복 boot, shutdown 전 tick, NULL 인자 정책을 정한다.
+
+## LAB2 process
+
+PID 발급, PCB 저장소, READY/RUNNING/EXITED 상태 전이를 구현한다. VM CPU context는 PCB에 저장할 수 있지만 스케줄링 정책은 아직 만들지 않는다.
+
+## LAB3 scheduler
+
+ready queue와 round-robin 순서를 구현한다. 테스트 예시 출력은 다음과 같다.
+
+```text
+$ make test-lab03
+[PASS] scheduler initializes
+[PASS] enqueue process 1
+[PASS] enqueue process 2
+LAB03 RESULT: 3 passed, 0 failed
+```
+
+## LAB4 sync
+
+semaphore와 mutex를 구현한다. 단일 스레드 시뮬레이션이어도 BLOCKED 상태와 wake-up 규칙을 설계하게 한다.
+
+## LAB5 memory
+
+VM spec에서 frame 수와 page size를 읽고 frame allocator를 만든다. VM은 raw memory만 제공한다.
+
+## LAB6 virtual memory
+
+가상 페이지를 물리 프레임에 매핑하고 VA를 PA로 변환한다. page fault와 writable 정책은 miniOS가 결정한다.
+
+## LAB7 file system
+
+raw block device 위에 inode-style file system을 만든다. 디렉터리, inode, data block 배치를 학생이 설계한다.
+
+## LAB8 syscall
+
+FD table과 open/read/write/close API를 만든다. TRAP 명령은 syscall 확장 지점으로만 제공된다.
+
+## LAB9 shell
+
+한 줄 명령 parser와 deterministic REPL script 실행을 만든다. 콘솔 출력 문자열이 공개 검증의 기준이다.
+
+## LAB10 integration
+
+LAB1-LAB9를 순서대로 초기화하고 통합 workload를 실행한다. 실패 시 어느 단계까지 성공했는지 report에 남긴다.
