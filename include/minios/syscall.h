@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include "minios/error.h"
+#include "minios/kernel.h"
 
 /** @brief 파일 디스크립터 타입. */
 typedef int mos_fd_t;
@@ -22,18 +23,18 @@ typedef enum mos_syscall_number {
 } mos_syscall_number_t;
 
 /** @brief syscall 계층을 초기화한다. */
-mos_status_t mos_syscall_init(void);
+mos_status_t mos_syscall_init(mos_kernel_t *kernel);
 
 /** @brief path를 열고 fd를 반환한다. */
-mos_status_t mos_sys_open(const char *path, mos_fd_t *fd_out);
+mos_status_t mos_sys_open(mos_kernel_t *kernel, const char *path, mos_fd_t *fd_out);
 
 /** @brief fd에 바이트를 쓴다. */
-mos_status_t mos_sys_write(mos_fd_t fd, const void *buffer, size_t size, size_t *written_out);
+mos_status_t mos_sys_write(mos_kernel_t *kernel, mos_fd_t fd, const void *buffer, size_t size, size_t *written_out);
 
 /** @brief fd에서 바이트를 읽는다. */
-mos_status_t mos_sys_read(mos_fd_t fd, void *buffer, size_t buffer_size, size_t *read_out);
+mos_status_t mos_sys_read(mos_kernel_t *kernel, mos_fd_t fd, void *buffer, size_t buffer_size, size_t *read_out);
 
 /** @brief fd를 닫는다. */
-mos_status_t mos_sys_close(mos_fd_t fd);
+mos_status_t mos_sys_close(mos_kernel_t *kernel, mos_fd_t fd);
 
 #endif

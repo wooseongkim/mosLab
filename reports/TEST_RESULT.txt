@@ -1,11 +1,17 @@
 miniOS C lab verification
-Date: 2026-08-20
+Date: 2026-08-21
 
 Command:
 make verify-instructor
 
 Result:
 VM RUNTIME RESULT: 39 passed, 0 failed
+
+Additional checks included by make verify-instructor:
+- Public header syntax check
+- src/*.c syntax check
+- apps/*.c syntax check
+- tests/*.c syntax check
 
 Command:
 make test
@@ -19,3 +25,6 @@ Failure summary:
 - tick value can be read
 - tick value is 1
 - kernel shuts down
+
+Note:
+The public LAB tests are expected to fail in the instructor distribution until students implement the stubs under src/.

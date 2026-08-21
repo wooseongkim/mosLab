@@ -17,6 +17,7 @@ typedef enum mos_status {
     MOS_ERR_NOT_FOUND = 4,     /**< 요청한 객체를 찾지 못했다. */
     MOS_ERR_NO_SPACE = 5,      /**< 고정 자원이 부족하다. */
     MOS_ERR_RANGE = 6,         /**< 인덱스, 주소, 크기가 범위를 벗어났다. */
+    MOS_ERR_BLOCKED = 7,       /**< 호출한 프로세스가 대기 상태로 전환되었다. */
     MOS_ERR_UNIMPLEMENTED = 99 /**< 학생 구현이 아직 제공되지 않았다. */
 } mos_status_t;
 

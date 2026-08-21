@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include "minios/error.h"
+#include "minios/kernel.h"
 
 /** @brief shell 명령 실행 결과. */
 typedef struct mos_shell_result {
@@ -17,12 +18,12 @@ typedef struct mos_shell_result {
 } mos_shell_result_t;
 
 /** @brief shell 계층을 초기화한다. */
-mos_status_t mos_shell_init(void);
+mos_status_t mos_shell_init(mos_kernel_t *kernel);
 
 /** @brief 한 줄 명령을 실행한다. */
-mos_status_t mos_shell_execute_line(const char *line, mos_shell_result_t *result_out);
+mos_status_t mos_shell_execute_line(mos_kernel_t *kernel, const char *line, mos_shell_result_t *result_out);
 
 /** @brief 여러 줄 입력을 deterministic하게 실행한다. */
-mos_status_t mos_shell_run_script(const char *script, char *output, size_t output_size);
+mos_status_t mos_shell_run_script(mos_kernel_t *kernel, const char *script, char *output, size_t output_size);
 
 #endif

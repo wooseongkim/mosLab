@@ -8,28 +8,40 @@
  * - 정답 구조체 필드명을 맞추려 하지 말고 동작 계약을 만족시키는 설계를 우선한다.
  */
 
-mos_status_t mos_process_table_init(void) {
+mos_status_t mos_process_table_init(mos_kernel_t *kernel) {
+    (void)kernel;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_process_create(const vm_program_t *program, mos_pid_t *pid_out) {
+mos_status_t mos_process_create(mos_kernel_t *kernel, const vm_program_t *program, mos_pid_t *pid_out) {
+    (void)kernel;
     (void)program;
     (void)pid_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_process_get(mos_pid_t pid, mos_process_t **process_out) {
+mos_status_t mos_process_get(mos_kernel_t *kernel, mos_pid_t pid, mos_process_t **process_out) {
+    (void)kernel;
     (void)pid;
     (void)process_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_process_exit(mos_pid_t pid) {
+mos_status_t mos_process_info(const mos_kernel_t *kernel, mos_pid_t pid, mos_process_info_t *info_out) {
+    (void)kernel;
+    (void)pid;
+    (void)info_out;
+    return MOS_ERR_UNIMPLEMENTED;
+}
+
+mos_status_t mos_process_exit(mos_kernel_t *kernel, mos_pid_t pid) {
+    (void)kernel;
     (void)pid;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_process_count(size_t *count_out) {
+mos_status_t mos_process_count(const mos_kernel_t *kernel, size_t *count_out) {
+    (void)kernel;
     (void)count_out;
     return MOS_ERR_UNIMPLEMENTED;
 }

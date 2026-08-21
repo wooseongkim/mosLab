@@ -10,6 +10,7 @@
 
 #include "minios/blockdev.h"
 #include "minios/error.h"
+#include "minios/kernel.h"
 
 /** @brief inode 번호. */
 typedef int mos_inode_t;
@@ -21,18 +22,18 @@ typedef struct mos_file_stat {
 } mos_file_stat_t;
 
 /** @brief 파일 시스템을 초기화한다. */
-mos_status_t mos_fs_init(mos_blockdev_t *device);
+mos_status_t mos_fs_init(mos_kernel_t *kernel, mos_blockdev_t *device);
 
 /** @brief 새 파일을 만든다. */
-mos_status_t mos_fs_create(const char *path, mos_inode_t *inode_out);
+mos_status_t mos_fs_create(mos_kernel_t *kernel, const char *path, mos_inode_t *inode_out);
 
 /** @brief 파일에 데이터를 쓴다. */
-mos_status_t mos_fs_write(const char *path, const void *buffer, size_t size);
+mos_status_t mos_fs_write(mos_kernel_t *kernel, const char *path, const void *buffer, size_t size);
 
 /** @brief 파일에서 데이터를 읽는다. */
-mos_status_t mos_fs_read(const char *path, void *buffer, size_t buffer_size, size_t *read_out);
+mos_status_t mos_fs_read(const mos_kernel_t *kernel, const char *path, void *buffer, size_t buffer_size, size_t *read_out);
 
 /** @brief 파일 메타데이터를 조회한다. */
-mos_status_t mos_fs_stat(const char *path, mos_file_stat_t *stat_out);
+mos_status_t mos_fs_stat(const mos_kernel_t *kernel, const char *path, mos_file_stat_t *stat_out);
 
 #endif

@@ -7,17 +7,20 @@
  * - invalid fd, closed fd, buffer 범위 오류를 모두 상태 코드로 표현한다.
  */
 
-mos_status_t mos_syscall_init(void) {
+mos_status_t mos_syscall_init(mos_kernel_t *kernel) {
+    (void)kernel;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_sys_open(const char *path, mos_fd_t *fd_out) {
+mos_status_t mos_sys_open(mos_kernel_t *kernel, const char *path, mos_fd_t *fd_out) {
+    (void)kernel;
     (void)path;
     (void)fd_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_sys_write(mos_fd_t fd, const void *buffer, size_t size, size_t *written_out) {
+mos_status_t mos_sys_write(mos_kernel_t *kernel, mos_fd_t fd, const void *buffer, size_t size, size_t *written_out) {
+    (void)kernel;
     (void)fd;
     (void)buffer;
     (void)size;
@@ -25,7 +28,8 @@ mos_status_t mos_sys_write(mos_fd_t fd, const void *buffer, size_t size, size_t 
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_sys_read(mos_fd_t fd, void *buffer, size_t buffer_size, size_t *read_out) {
+mos_status_t mos_sys_read(mos_kernel_t *kernel, mos_fd_t fd, void *buffer, size_t buffer_size, size_t *read_out) {
+    (void)kernel;
     (void)fd;
     (void)buffer;
     (void)buffer_size;
@@ -33,7 +37,8 @@ mos_status_t mos_sys_read(mos_fd_t fd, void *buffer, size_t buffer_size, size_t 
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_sys_close(mos_fd_t fd) {
+mos_status_t mos_sys_close(mos_kernel_t *kernel, mos_fd_t fd) {
+    (void)kernel;
     (void)fd;
     return MOS_ERR_UNIMPLEMENTED;
 }

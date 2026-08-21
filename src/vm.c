@@ -7,23 +7,30 @@
  * - VM 라이브러리의 raw memory API와 혼동하지 말고 주소 변환 정책만 구현한다.
  */
 
-mos_status_t mos_vm_init(void) {
+mos_status_t mos_vm_init(mos_kernel_t *kernel) {
+    (void)kernel;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_vm_map(mos_vaddr_t virtual_page, mos_frame_t frame, int writable) {
+mos_status_t mos_vm_map(mos_kernel_t *kernel, mos_pid_t pid, mos_vaddr_t virtual_page, mos_frame_t frame, int writable) {
+    (void)kernel;
+    (void)pid;
     (void)virtual_page;
     (void)frame;
     (void)writable;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_vm_unmap(mos_vaddr_t virtual_page) {
+mos_status_t mos_vm_unmap(mos_kernel_t *kernel, mos_pid_t pid, mos_vaddr_t virtual_page) {
+    (void)kernel;
+    (void)pid;
     (void)virtual_page;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_vm_translate(mos_vaddr_t virtual_address, mos_paddr_t *physical_out) {
+mos_status_t mos_vm_translate(const mos_kernel_t *kernel, mos_pid_t pid, mos_vaddr_t virtual_address, mos_paddr_t *physical_out) {
+    (void)kernel;
+    (void)pid;
     (void)virtual_address;
     (void)physical_out;
     return MOS_ERR_UNIMPLEMENTED;

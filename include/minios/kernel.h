@@ -22,6 +22,13 @@ typedef enum mos_kernel_state {
 typedef struct mos_kernel {
     mos_kernel_state_t state; /**< lifecycle 상태. */
     vm_machine_t machine;     /**< 교수 제공 VM. */
+    void *process_table;      /**< LAB2 process table 소유 상태. */
+    void *scheduler;          /**< LAB3 scheduler 소유 상태. */
+    void *memory;             /**< LAB5 frame allocator 소유 상태. */
+    void *virtual_memory;     /**< LAB6 address-space 소유 상태. */
+    void *file_system;        /**< LAB7 file system 소유 상태. */
+    void *syscalls;           /**< LAB8 syscall table 소유 상태. */
+    void *shell;              /**< LAB9 shell 소유 상태. */
 } mos_kernel_t;
 
 /** @brief 커널과 VM을 부팅한다. */

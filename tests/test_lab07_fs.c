@@ -13,12 +13,13 @@ int main(void) {
 
     (void)mos_kernel_boot(&kernel);
     TEST_EXPECT_STATUS(&report, "block device initializes", mos_blockdev_init(&device, &kernel.machine), MOS_OK);
-    TEST_EXPECT_STATUS(&report, "file system initializes", mos_fs_init(&device), MOS_OK);
-    TEST_EXPECT_STATUS(&report, "file can be created", mos_fs_create("/hello", &inode), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "file system initializes", mos_fs_init(&kernel, &device), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "file can be created", mos_fs_create(&kernel, "/hello", &inode), MOS_OK);
     TEST_EXPECT(&report, "inode is assigned", inode >= 0);
-    TEST_EXPECT_STATUS(&report, "file write succeeds", mos_fs_write("/hello", "os", 2U), MOS_OK);
-    TEST_EXPECT_STATUS(&report, "file read succeeds", mos_fs_read("/hello", buffer, sizeof(buffer), &read_size), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "file write succeeds", mos_fs_write(&kernel, "/hello", "os", 2U), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "file read succeeds", mos_fs_read(&kernel, "/hello", buffer, sizeof(buffer), &read_size), MOS_OK);
     TEST_EXPECT(&report, "file content round trips", read_size == 2U && memcmp(buffer, "os", 2U) == 0);
+    TEST_EXPECT_STATUS(&report, "missing file returns not found", mos_fs_read(&kernel, "/missing", buffer, sizeof(buffer), &read_size), MOS_ERR_NOT_FOUND);
 
     return test_finish("LAB07", &report);
 }

@@ -15,7 +15,23 @@ MAIN_OBJ := $(BUILD_DIR)/src/main.o
 
 LABS := 01 02 03 04 05 06 07 08 09 10
 
-.PHONY: vm-lib verify-instructor minios test clean $(addprefix demo-lab,$(LABS)) $(addprefix test-lab,$(LABS))
+HEADERS := $(sort $(wildcard include/minios/*.h include/mosvm/*.h))
+APP_SRCS := $(sort $(wildcard apps/*.c))
+TEST_SRCS := $(sort $(wildcard tests/*.c))
+ALL_C_SRCS := $(sort $(wildcard src/*.c instructor/vm_runtime/*.c))
+
+.PHONY: help vm-lib syntax-check verify-instructor minios test clean $(addprefix demo-lab,$(LABS)) $(addprefix test-lab,$(LABS))
+
+help:
+	@printf '%s\n' 'miniOS lab targets:'
+	@printf '  %-20s %s\n' 'make vm-lib' 'Build professor-provided VM static library'
+	@printf '  %-20s %s\n' 'make syntax-check' 'Compile-check public headers, src, apps, and tests'
+	@printf '  %-20s %s\n' 'make verify-instructor' 'Run syntax checks and VM runtime tests'
+	@printf '  %-20s %s\n' 'make minios' 'Link the student miniOS executable'
+	@printf '  %-20s %s\n' 'make demo-labNN' 'Build and run one LAB demo, for NN=01..10'
+	@printf '  %-20s %s\n' 'make test-labNN' 'Build and run one public LAB test, for NN=01..10'
+	@printf '  %-20s %s\n' 'make test' 'Run all public LAB tests'
+	@printf '  %-20s %s\n' 'make clean' 'Remove generated build outputs'
 
 vm-lib: $(VM_LIB)
 
@@ -33,7 +49,18 @@ $(BUILD_DIR)/tests/test_vm_runtime: tests/test_vm_runtime.c $(VM_LIB)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $< $(VM_LIB) -o $@
 
-verify-instructor: vm-lib $(BUILD_DIR)/tests/test_vm_runtime
+$(BUILD_DIR)/syntax/header_check.c: $(HEADERS)
+	@mkdir -p $(dir $@)
+	@printf '%s\n' $(patsubst %, '#include "%"', $(HEADERS)) > $@
+	@printf '%s\n' 'int main(void) { return 0; }' >> $@
+
+syntax-check: $(BUILD_DIR)/syntax/header_check.c
+	$(CC) $(CFLAGS) -fsyntax-only $<
+	@for file in $(ALL_C_SRCS) $(APP_SRCS) $(TEST_SRCS); do \
+		$(CC) $(CFLAGS) -fsyntax-only $$file || exit 1; \
+	done
+
+verify-instructor: syntax-check vm-lib $(BUILD_DIR)/tests/test_vm_runtime
 	$(BUILD_DIR)/tests/test_vm_runtime
 
 minios: $(MAIN_OBJ) $(MINIOS_OBJS) $(VM_LIB)

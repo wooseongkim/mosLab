@@ -7,17 +7,20 @@
  * - tests는 콘솔 문자열만 확인하므로 private parser 이름에 의존하지 않는다.
  */
 
-mos_status_t mos_shell_init(void) {
+mos_status_t mos_shell_init(mos_kernel_t *kernel) {
+    (void)kernel;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_shell_execute_line(const char *line, mos_shell_result_t *result_out) {
+mos_status_t mos_shell_execute_line(mos_kernel_t *kernel, const char *line, mos_shell_result_t *result_out) {
+    (void)kernel;
     (void)line;
     (void)result_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_shell_run_script(const char *script, char *output, size_t output_size) {
+mos_status_t mos_shell_run_script(mos_kernel_t *kernel, const char *script, char *output, size_t output_size) {
+    (void)kernel;
     (void)script;
     (void)output;
     (void)output_size;

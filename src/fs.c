@@ -7,25 +7,29 @@
  * - 공개 테스트는 파일 생성/읽기/쓰기/stat 동작만 확인한다.
  */
 
-mos_status_t mos_fs_init(mos_blockdev_t *device) {
+mos_status_t mos_fs_init(mos_kernel_t *kernel, mos_blockdev_t *device) {
+    (void)kernel;
     (void)device;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_fs_create(const char *path, mos_inode_t *inode_out) {
+mos_status_t mos_fs_create(mos_kernel_t *kernel, const char *path, mos_inode_t *inode_out) {
+    (void)kernel;
     (void)path;
     (void)inode_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_fs_write(const char *path, const void *buffer, size_t size) {
+mos_status_t mos_fs_write(mos_kernel_t *kernel, const char *path, const void *buffer, size_t size) {
+    (void)kernel;
     (void)path;
     (void)buffer;
     (void)size;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_fs_read(const char *path, void *buffer, size_t buffer_size, size_t *read_out) {
+mos_status_t mos_fs_read(const mos_kernel_t *kernel, const char *path, void *buffer, size_t buffer_size, size_t *read_out) {
+    (void)kernel;
     (void)path;
     (void)buffer;
     (void)buffer_size;
@@ -33,7 +37,8 @@ mos_status_t mos_fs_read(const char *path, void *buffer, size_t buffer_size, siz
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_fs_stat(const char *path, mos_file_stat_t *stat_out) {
+mos_status_t mos_fs_stat(const mos_kernel_t *kernel, const char *path, mos_file_stat_t *stat_out) {
+    (void)kernel;
     (void)path;
     (void)stat_out;
     return MOS_ERR_UNIMPLEMENTED;

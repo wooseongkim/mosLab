@@ -7,22 +7,25 @@
  * - bitmap, stack, free list 중 하나를 선택하되 public API 밖으로 노출하지 않는다.
  */
 
-mos_status_t mos_memory_init(const vm_machine_t *machine) {
-    (void)machine;
+mos_status_t mos_memory_init(mos_kernel_t *kernel) {
+    (void)kernel;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_frame_alloc(mos_frame_t *frame_out) {
+mos_status_t mos_frame_alloc(mos_kernel_t *kernel, mos_frame_t *frame_out) {
+    (void)kernel;
     (void)frame_out;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_frame_free(mos_frame_t frame) {
+mos_status_t mos_frame_free(mos_kernel_t *kernel, mos_frame_t frame) {
+    (void)kernel;
     (void)frame;
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_memory_get_stats(mos_memory_stats_t *stats_out) {
+mos_status_t mos_memory_get_stats(const mos_kernel_t *kernel, mos_memory_stats_t *stats_out) {
+    (void)kernel;
     (void)stats_out;
     return MOS_ERR_UNIMPLEMENTED;
 }

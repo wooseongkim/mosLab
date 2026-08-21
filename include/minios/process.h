@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include "minios/error.h"
+#include "minios/kernel.h"
 #include "mosvm/vm_cpu.h"
 #include "mosvm/vm_program.h"
 
@@ -31,19 +32,28 @@ typedef struct mos_process {
     vm_cpu_context_t cpu_context;  /**< VM CPU 문맥. */
 } mos_process_t;
 
+/** @brief 공개 테스트와 관찰 도구가 사용하는 process snapshot. */
+typedef struct mos_process_info {
+    mos_pid_t pid;             /**< 프로세스 식별자. */
+    mos_process_state_t state; /**< 현재 상태. */
+} mos_process_info_t;
+
 /** @brief 프로세스 테이블을 초기화한다. */
-mos_status_t mos_process_table_init(void);
+mos_status_t mos_process_table_init(mos_kernel_t *kernel);
 
 /** @brief 프로그램 이미지로 새 프로세스를 만든다. */
-mos_status_t mos_process_create(const vm_program_t *program, mos_pid_t *pid_out);
+mos_status_t mos_process_create(mos_kernel_t *kernel, const vm_program_t *program, mos_pid_t *pid_out);
 
 /** @brief PID로 프로세스 객체를 조회한다. */
-mos_status_t mos_process_get(mos_pid_t pid, mos_process_t **process_out);
+mos_status_t mos_process_get(mos_kernel_t *kernel, mos_pid_t pid, mos_process_t **process_out);
+
+/** @brief PID로 프로세스 snapshot을 조회한다. */
+mos_status_t mos_process_info(const mos_kernel_t *kernel, mos_pid_t pid, mos_process_info_t *info_out);
 
 /** @brief 프로세스를 종료 상태로 전환한다. */
-mos_status_t mos_process_exit(mos_pid_t pid);
+mos_status_t mos_process_exit(mos_kernel_t *kernel, mos_pid_t pid);
 
 /** @brief 현재 할당된 프로세스 수를 조회한다. */
-mos_status_t mos_process_count(size_t *count_out);
+mos_status_t mos_process_count(const mos_kernel_t *kernel, size_t *count_out);
 
 #endif
