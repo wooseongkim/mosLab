@@ -20,8 +20,6 @@ typedef size_t mos_vaddr_t;
 typedef size_t mos_paddr_t;
 
 #define MOS_VM_PAGE_SIZE 256U
-#define MOS_VM_MAX_MAPPINGS_PER_PROCESS 64U
-
 /** @brief 단일 page mapping 정보. */
 typedef struct mos_vm_mapping {
     mos_vaddr_t virtual_page; /**< 가상 페이지 번호. */
@@ -31,9 +29,8 @@ typedef struct mos_vm_mapping {
 
 /** @brief 프로세스별 가상 주소 공간 관찰 정보. */
 typedef struct mos_address_space {
-    mos_pid_t pid;                                           /**< 주소 공간 소유 PID. */
-    mos_vm_mapping_t mappings[MOS_VM_MAX_MAPPINGS_PER_PROCESS]; /**< page table entries. */
-    size_t mapping_count;                                    /**< 사용 중인 mapping 수. */
+    mos_pid_t pid;       /**< 주소 공간 소유 PID. */
+    size_t mapping_count; /**< 사용 중인 mapping 수. */
 } mos_address_space_t;
 
 /** @brief page table을 초기화한다. */

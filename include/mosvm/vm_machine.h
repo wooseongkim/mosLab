@@ -21,20 +21,9 @@ typedef struct vm_machine_spec {
     size_t block_count;    /**< 블록 장치 블록 개수. 기본 64개. */
 } vm_machine_spec_t;
 
-/**
- * @brief 가상 머신 인스턴스.
- *
- * 구조체 정의는 공개되지만 학생 miniOS는 필드를 직접 수정하지 말고
- * VM API를 통해서만 접근해야 한다.
- */
+/** @brief 가상 머신 인스턴스 핸들. 내부 상태는 교수자 VM 라이브러리만 접근한다. */
 typedef struct vm_machine {
-    vm_machine_spec_t spec;       /**< 고정 하드웨어 사양. */
-    uint64_t ticks;               /**< simulated timer tick. */
-    unsigned char *memory;        /**< raw physical memory. */
-    unsigned char *blocks;        /**< raw block storage. */
-    char *console;                /**< deterministic console buffer. */
-    size_t console_size;          /**< console capacity including NUL. */
-    size_t console_length;        /**< 현재 console 문자열 길이. */
+    void *impl; /**< private VM implementation pointer. */
 } vm_machine_t;
 
 /**

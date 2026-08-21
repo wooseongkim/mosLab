@@ -13,6 +13,11 @@ Additional checks included by make verify-instructor:
 - apps/*.c syntax check
 - tests/*.c syntax check
 
+VM library policy:
+- Student Makefile does not expose make vm-lib.
+- make clean removes build/ only and preserves lib/libmosvm.a.
+- VM rebuild is available only through instructor/Makefile for professor/CI use.
+
 Command:
 make test
 

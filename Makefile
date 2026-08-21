@@ -6,9 +6,6 @@ BUILD_DIR := build
 LIB_DIR := lib
 VM_LIB := $(LIB_DIR)/libmosvm.a
 
-VM_SRCS := $(sort $(wildcard instructor/vm_runtime/*.c))
-VM_OBJS := $(patsubst %.c,$(BUILD_DIR)/%.o,$(VM_SRCS))
-
 MINIOS_SRCS := $(filter-out src/main.c,$(sort $(wildcard src/*.c)))
 MINIOS_OBJS := $(patsubst %.c,$(BUILD_DIR)/%.o,$(MINIOS_SRCS))
 MAIN_OBJ := $(BUILD_DIR)/src/main.o
@@ -18,13 +15,12 @@ LABS := 01 02 03 04 05 06 07 08 09 10
 HEADERS := $(sort $(wildcard include/minios/*.h include/mosvm/*.h))
 APP_SRCS := $(sort $(wildcard apps/*.c))
 TEST_SRCS := $(sort $(wildcard tests/*.c))
-ALL_C_SRCS := $(sort $(wildcard src/*.c instructor/vm_runtime/*.c))
+ALL_C_SRCS := $(sort $(wildcard src/*.c))
 
-.PHONY: help vm-lib syntax-check verify-instructor minios test clean $(addprefix demo-lab,$(LABS)) $(addprefix test-lab,$(LABS))
+.PHONY: help syntax-check verify-instructor minios test clean $(addprefix demo-lab,$(LABS)) $(addprefix test-lab,$(LABS))
 
 help:
 	@printf '%s\n' 'miniOS lab targets:'
-	@printf '  %-20s %s\n' 'make vm-lib' 'Build professor-provided VM static library'
 	@printf '  %-20s %s\n' 'make syntax-check' 'Compile-check public headers, src, apps, and tests'
 	@printf '  %-20s %s\n' 'make verify-instructor' 'Run syntax checks and VM runtime tests'
 	@printf '  %-20s %s\n' 'make minios' 'Link the student miniOS executable'
@@ -32,11 +28,6 @@ help:
 	@printf '  %-20s %s\n' 'make test-labNN' 'Build and run one public LAB test, for NN=01..10'
 	@printf '  %-20s %s\n' 'make test' 'Run all public LAB tests'
 	@printf '  %-20s %s\n' 'make clean' 'Remove generated build outputs'
-
-vm-lib: $(VM_LIB)
-
-$(VM_LIB): $(VM_OBJS) | $(LIB_DIR)
-	$(AR) rcs $@ $^
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -60,7 +51,12 @@ syntax-check: $(BUILD_DIR)/syntax/header_check.c
 		$(CC) $(CFLAGS) -fsyntax-only $$file || exit 1; \
 	done
 
-verify-instructor: syntax-check vm-lib $(BUILD_DIR)/tests/test_vm_runtime
+$(VM_LIB):
+	@printf '%s\n' 'Missing trusted VM library: lib/libmosvm.a' >&2
+	@printf '%s\n' 'Student builds do not regenerate this file. Use instructor/Makefile in CI or restore the distributed library.' >&2
+	@exit 1
+
+verify-instructor: syntax-check $(BUILD_DIR)/tests/test_vm_runtime
 	$(BUILD_DIR)/tests/test_vm_runtime
 
 minios: $(MAIN_OBJ) $(MINIOS_OBJS) $(VM_LIB)
@@ -87,4 +83,4 @@ $(foreach lab,$(LABS),$(eval $(call LAB_RULES,$(lab))))
 test: $(addprefix test-lab,$(LABS))
 
 clean:
-	rm -rf $(BUILD_DIR) $(VM_LIB)
+	rm -rf $(BUILD_DIR)

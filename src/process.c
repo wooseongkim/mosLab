@@ -20,13 +20,6 @@ mos_status_t mos_process_create(mos_kernel_t *kernel, const vm_program_t *progra
     return MOS_ERR_UNIMPLEMENTED;
 }
 
-mos_status_t mos_process_get(mos_kernel_t *kernel, mos_pid_t pid, mos_process_t **process_out) {
-    (void)kernel;
-    (void)pid;
-    (void)process_out;
-    return MOS_ERR_UNIMPLEMENTED;
-}
-
 mos_status_t mos_process_info(const mos_kernel_t *kernel, mos_pid_t pid, mos_process_info_t *info_out) {
     (void)kernel;
     (void)pid;

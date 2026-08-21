@@ -44,3 +44,9 @@ mos_status_t mos_mutex_unlock(mos_kernel_t *kernel, mos_mutex_t *mutex, mos_pid_
     (void)pid;
     return MOS_ERR_UNIMPLEMENTED;
 }
+
+mos_status_t mos_mutex_owner(const mos_mutex_t *mutex, mos_pid_t *pid_out) {
+    (void)mutex;
+    (void)pid_out;
+    return MOS_ERR_UNIMPLEMENTED;
+}

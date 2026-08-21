@@ -10,7 +10,6 @@
 
 #include "minios/error.h"
 #include "minios/kernel.h"
-#include "mosvm/vm_cpu.h"
 #include "mosvm/vm_program.h"
 
 /** @brief 프로세스 식별자 타입. */
@@ -25,13 +24,6 @@ typedef enum mos_process_state {
     MOS_PROC_EXITED = 4   /**< 종료되었다. */
 } mos_process_state_t;
 
-/** @brief 학생이 확장할 수 있는 공개 PCB 시작 형태. */
-typedef struct mos_process {
-    mos_pid_t pid;                 /**< 프로세스 식별자. */
-    mos_process_state_t state;     /**< 현재 상태. */
-    vm_cpu_context_t cpu_context;  /**< VM CPU 문맥. */
-} mos_process_t;
-
 /** @brief 공개 테스트와 관찰 도구가 사용하는 process snapshot. */
 typedef struct mos_process_info {
     mos_pid_t pid;             /**< 프로세스 식별자. */
@@ -43,9 +35,6 @@ mos_status_t mos_process_table_init(mos_kernel_t *kernel);
 
 /** @brief 프로그램 이미지로 새 프로세스를 만든다. */
 mos_status_t mos_process_create(mos_kernel_t *kernel, const vm_program_t *program, mos_pid_t *pid_out);
-
-/** @brief PID로 프로세스 객체를 조회한다. */
-mos_status_t mos_process_get(mos_kernel_t *kernel, mos_pid_t pid, mos_process_t **process_out);
 
 /** @brief PID로 프로세스 snapshot을 조회한다. */
 mos_status_t mos_process_info(const mos_kernel_t *kernel, mos_pid_t pid, mos_process_info_t *info_out);

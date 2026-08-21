@@ -6,6 +6,8 @@
 
 int main(void) {
     mos_kernel_t kernel;
+    mos_blockdev_t device;
+    mos_inode_t inode = -1;
     mos_fd_t fd = -1;
     size_t written = 0U;
     char buffer[8];
@@ -13,6 +15,9 @@ int main(void) {
     test_report_t report = {0, 0};
 
     TEST_EXPECT_STATUS(&report, "system boots before syscall", mos_kernel_boot(&kernel), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "block device initializes", mos_blockdev_init(&device, &kernel.machine), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "file system initializes", mos_fs_init(&kernel, &device), MOS_OK);
+    TEST_EXPECT_STATUS(&report, "log file exists before open", mos_fs_create(&kernel, "/log", &inode), MOS_OK);
     TEST_EXPECT_STATUS(&report, "syscall layer initializes", mos_syscall_init(&kernel), MOS_OK);
     TEST_EXPECT_STATUS(&report, "open returns fd", mos_sys_open(&kernel, "/log", &fd), MOS_OK);
     TEST_EXPECT(&report, "fd is non-negative", fd >= 0);

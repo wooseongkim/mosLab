@@ -7,6 +7,7 @@ int main(void) {
     mos_kernel_t kernel;
     mos_pid_t owner = -1;
     mos_pid_t waiter = -1;
+    mos_pid_t observed_owner = -1;
     mos_process_info_t waiter_info;
     mos_semaphore_t sem;
     mos_mutex_t mutex;
@@ -25,7 +26,8 @@ int main(void) {
     TEST_EXPECT_STATUS(&report, "semaphore signal wakes waiter", mos_sem_signal(&kernel, &sem), MOS_OK);
     TEST_EXPECT_STATUS(&report, "mutex initializes unlocked", mos_mutex_init(&mutex), MOS_OK);
     TEST_EXPECT_STATUS(&report, "mutex lock records owner", mos_mutex_lock(&kernel, &mutex, owner), MOS_OK);
-    TEST_EXPECT(&report, "mutex owner is visible", mutex.owner_pid == owner);
+    TEST_EXPECT_STATUS(&report, "mutex owner snapshot is readable", mos_mutex_owner(&mutex, &observed_owner), MOS_OK);
+    TEST_EXPECT(&report, "mutex owner is visible", observed_owner == owner);
     TEST_EXPECT_STATUS(&report, "second locker blocks", mos_mutex_lock(&kernel, &mutex, waiter), MOS_ERR_BLOCKED);
     TEST_EXPECT_STATUS(&report, "mutex unlock by owner succeeds", mos_mutex_unlock(&kernel, &mutex, owner), MOS_OK);
 
