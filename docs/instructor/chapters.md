@@ -43,17 +43,19 @@ LAB05 observed frame=<allocated> total=<frames> free=<frames-1>
 
 가상 페이지를 물리 프레임에 매핑하고 VA를 PA로 변환한다. page fault와 writable 정책은 miniOS가 결정한다.
 
-데모는 LAB5 allocator에서 얻은 frame을 사용해 PID 1의 VA를 PA로 변환한다.
+데모는 LAB2에서 생성한 실제 PID와 LAB5 allocator에서 얻은 frame을 사용해 VA를 PA로 변환한다.
 
 ```text
 $ make demo-lab06
 LAB06 kernel boot status: 0
+LAB06 process table init status: 0
+LAB06 process create status: 0
 LAB06 memory init status: 0
 LAB06 frame alloc status: 0
 LAB06 virtual memory init status: 0
 LAB06 map status: 0
 LAB06 translate status: 0
-LAB06 observed physical=<frame * 256 + 7>
+LAB06 observed pid=<created> frame=<allocated> physical=<frame * 256 + 7>
 ```
 
 ## LAB7 file system
@@ -63,6 +65,21 @@ raw block device 위에 inode-style file system을 만든다. 디렉터리, inod
 ## LAB8 syscall
 
 FD table과 open/read/write/close API를 만든다. TRAP 명령은 syscall 확장 지점으로만 제공된다.
+
+데모는 block device와 file system을 초기화하고 `/log` 파일을 만든 뒤 syscall 계층에서 open/write/close를 수행한다.
+
+```text
+$ make demo-lab08
+LAB08 kernel boot status: 0
+LAB08 block device init status: 0
+LAB08 file system init status: 0
+LAB08 create /log status: 0
+LAB08 syscall init status: 0
+LAB08 open /log status: 0
+LAB08 write /log status: 0
+LAB08 close /log status: 0
+LAB08 observed inode=<created> fd=<opened> written=3
+```
 
 ## LAB9 shell
 
